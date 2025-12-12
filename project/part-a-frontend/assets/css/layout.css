@@ -1,0 +1,30 @@
+/* mobile first */
+.container {
+    display: flex;
+    flex-direction: column; 
+    padding: 1rem;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+/* tablet */
+@media (min-width: 768px) {
+    .course-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* desktop */
+@media (min-width: 1024px) {
+    .container {
+        flex-direction: row; 
+    }
+    
+    .course-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
