@@ -1,0 +1,40 @@
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+input:not(:placeholder-shown):valid {
+    border-color: green;
+    background-color: #f0fff4;
+}
+
+input:not(:placeholder-shown):invalid {
+    border-color: red;
+    background-color: #fff5f5; 
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+}
+
+input:not(:placeholder-shown):invalid + .error-msg {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
