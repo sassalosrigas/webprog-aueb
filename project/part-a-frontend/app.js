@@ -5,7 +5,7 @@ function renderCourses(coursesList) {
     container.innerHTML = '';
 
     if (coursesList.length === 0) {
-        container.innerHTML = '<p>Δεν βρέθηκαν μαθήματα.</p>';
+        container.innerHTML = '<p>No courses found.</p>';
         return;
     }
 
@@ -22,7 +22,7 @@ function renderCourses(coursesList) {
                     <p>${course.description}</p>
                     <div class="card-footer">
                         <span class="price">${course.price}</span>
-                        <a href="course-details.html?id=${course.id}" class="btn-outline">Λεπτομέρειες</a>
+                        <a href="course-details.html?id=${course.id}" class="btn-outline">Details</a>
                     </div>
                 </div>
             </article>
@@ -101,7 +101,7 @@ function loadCourseDetails() {
     const course = courses.find(c => c.id == courseId);
 
     if (!course) {
-        document.querySelector('.details-container').innerHTML = '<h2>Το μάθημα δεν βρέθηκε. <a href="courses.html">Επιστροφή</a></h2>';
+        document.querySelector('.details-container').innerHTML = '<h2>The course was not found. <a href="courses.html">Return</a></h2>';
         return;
     }
 

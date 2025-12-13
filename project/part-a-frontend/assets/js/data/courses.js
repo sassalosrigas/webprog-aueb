@@ -1,7 +1,7 @@
 const courses = [
     {
         id: 1,
-        title: "Web Development με HTML5 & CSS3",
+        title: "Web Development with HTML5 & CSS3",
         category: "web-dev",
         level: "Beginner",
         price: "Free",
@@ -37,7 +37,7 @@ const courses = [
     },
     {
         id: 3,
-        title: "Εισαγωγή στην Κυβερνοασφάλεια",
+        title: "Introduction to Cybersecurity",
         category: "security",
         level: "Intermediate",
         price: "15€",
