@@ -1,23 +1,87 @@
-function renderCourses(courses) {
-    const container = document.getElementById('courses-container');
-    if (!container) return;
+function renderCourses(coursesList) {
+    const container = document.getElementById('courses-grid');
+        if (!container) return;
 
     container.innerHTML = '';
 
-    courses.forEach(course => {
-        const html = `
+    if (coursesList.length === 0) {
+        container.innerHTML = '<p>Δεν βρέθηκαν μαθήματα.</p>';
+        return;
+    }
+
+    coursesList.forEach(course => {
+        const courseCard = `
             <article class="course-card">
-                <img src="${course.image}" alt="${course.title}">
-                <h3>${course.title}</h3>
-                <p>${course.description}</p>
-                <span class="badge">${course.category}</span>
-                <a href="course-details.html?id=${course.id}" class="btn">Δείτε περισσότερα</a>
+                <div class="card-header">
+                    <img src="${course.image}" alt="${course.title}" loading="lazy">
+                    <span class="badge ${course.level.toLowerCase()}">${course.level}</span>
+                </div>
+                <div class="card-body">
+                    <span class="category">${getCategoryName(course.category)}</span>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="card-footer">
+                        <span class="price">${course.price}</span>
+                        <a href="course-details.html?id=${course.id}" class="btn-outline">Λεπτομέρειες</a>
+                    </div>
+                </div>
             </article>
         `;
-        container.insertAdjacentHTML('beforeend', html);
+        
+        container.insertAdjacentHTML('beforeend', courseCard);
     });
 }
 
+function getCategoryName(catSlug) {
+    const names = {
+        'web-dev': 'Web Development',
+        'programming': 'Programming',
+        'security': 'Security',
+        'databases': 'Databases'
+    };
+    return names[catSlug] || catSlug;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    renderCourses(coursesData);
+    renderCourses(courses);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderCourses(courses);
+
+    const searchInput = document.getElementById('searchInput');
+    const categorySelect = document.getElementById('categorySelect');
+    const levelSelect = document.getElementById('levelSelect');
+    const clearBtn = document.getElementById('clearFiltersBtn');
+
+    if (!searchInput) return;
+
+    function filterCourses() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categorySelect.value;
+        const selectedLevel = levelSelect.value;
+
+        const filteredData = courses.filter(course => {
+            const matchesSearch = course.title.toLowerCase().includes(searchTerm);
+            
+            const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
+
+            const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
+
+            return matchesSearch && matchesCategory && matchesLevel;
+        });
+
+        renderCourses(filteredData);
+    }
+
+    searchInput.addEventListener('input', filterCourses);
+    categorySelect.addEventListener('change', filterCourses);
+    levelSelect.addEventListener('change', filterCourses);
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        categorySelect.value = 'all';
+        levelSelect.value = 'all';
+        renderCourses(courses);
+    });
 });
