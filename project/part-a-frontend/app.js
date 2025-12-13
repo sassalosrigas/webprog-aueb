@@ -85,3 +85,44 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCourses(courses);
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const titleElement = document.getElementById('course-title');
+    
+    if (titleElement) {
+        loadCourseDetails();
+    }
+});
+
+function loadCourseDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const courseId = params.get('id');
+
+    const course = courses.find(c => c.id == courseId);
+
+    if (!course) {
+        document.querySelector('.details-container').innerHTML = '<h2>Το μάθημα δεν βρέθηκε. <a href="courses.html">Επιστροφή</a></h2>';
+        return;
+    }
+
+    document.getElementById('course-title').textContent = course.title;
+    document.getElementById('course-category').textContent = course.category;
+    document.getElementById('course-desc').textContent = course.description;
+    document.getElementById('course-long-desc').textContent = course.longDescription || course.description;
+    document.getElementById('course-image').src = course.image;
+    document.getElementById('course-image').alt = course.title;
+    
+    document.getElementById('course-price').textContent = course.price;
+    document.getElementById('course-duration').textContent = course.duration || "N/A";
+    document.getElementById('course-level').textContent = course.level;
+    document.getElementById('course-instructor').textContent = course.instructor || "E-Learning Team";
+
+    const syllabusContainer = document.getElementById('course-syllabus');
+    if (course.syllabus) {
+        course.syllabus.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            syllabusContainer.appendChild(li);
+        });
+    }
+}
