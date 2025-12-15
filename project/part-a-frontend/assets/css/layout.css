@@ -180,46 +180,56 @@ section h1,
    MOBILE RESPONSIVENESS (Max-width 768px)
    ========================================= */
 @media (max-width: 768px) {
+    
+    /* 1. Show the Hamburger Button */
     .mobile-menu-btn {
         display: flex; 
+        z-index: 1001; /* Ensure it's clickable */
     }
 
+    /* 2. Hide the Menu by default */
     .main-nav {
         display: none; 
         position: absolute;
-        top: 100%;
+        top: 100%; /* Push it below the header */
         left: 0;
         width: 100%;
         background-color: white;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         border-top: 1px solid #eee;
+        z-index: 999;
     }
 
+    /* 3. SHOW the Menu when 'active' class is added by JS */
     .main-nav.active {
-        display: block; 
+        display: flex !important; /* Force it to show */
+        flex-direction: column;
     }
 
     .main-nav ul {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
+        width: 100%;
+        padding: 0;
+        margin: 0;
     }
 
     .main-nav li {
         width: 100%;
+        text-align: center;
         border-bottom: 1px solid #f0f0f0;
     }
 
     .main-nav a {
         display: block;
-        padding: 15px 20px;
+        padding: 15px;
         width: 100%;
     }
 
-    .btn-register {
-        margin: 15px 20px;
-        width: auto;
+    /* Fix the Register Button on Mobile */
+    .main-nav .btn-register {
+        margin: 15px auto; /* Center it */
         display: inline-block;
+        width: auto;
     }
 }
 
