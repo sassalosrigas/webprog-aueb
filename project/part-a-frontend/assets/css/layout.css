@@ -1,140 +1,14 @@
-/* Layout System - Mobile First */
+/* =========================================
+   1. GLOBAL LAYOUT & MAIN CONTAINER
+   ========================================= */
 
-/* Header */
-header {
-    background-color: var(--bg-lighter);
-    border-bottom: 1px solid var(--border);
-    padding: var(--spacing-base) var(--spacing-lg);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo {
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-    color: var(--primary);
-    white-space: nowrap;
-    transition: color var(--transition-fast);
-}
-
-.logo:hover {
-    color: var(--primary-dark);
-}
-
-#mobile-menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    font-size: var(--font-size-2xl);
-    cursor: pointer;
-    color: var(--text-primary);
-    width: 2.5rem;
-    height: 2.5rem;
-    transition: color var(--transition-fast);
-}
-
-#mobile-menu-btn:hover {
-    color: var(--primary);
-}
-
-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: var(--bg-lighter);
-    border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
-    flex-direction: column;
-    width: 100%;
-    z-index: 999;
-    animation: slideDown var(--transition-base) ease-out;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-nav.active {
-    display: flex;
-}
-
-nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    list-style: none;
-    width: 100%;
-    padding: var(--spacing-base) 0;
-}
-
-nav li {
-    border-bottom: 1px solid var(--border);
-}
-
-nav li:last-child {
-    border-bottom: none;
-}
-
-nav a {
-    display: block;
-    padding: var(--spacing-md) var(--spacing-lg);
-    color: var(--text-primary);
-    font-weight: 500;
-    transition: all var(--transition-fast);
-    position: relative;
-}
-
-nav a:hover {
-    color: var(--primary);
-    background-color: var(--primary-light);
-}
-
-nav a.active {
-    color: var(--primary);
-    background-color: var(--primary-light);
-    font-weight: 600;
-}
-
-nav a.btn-register {
-    background-color: var(--primary);
-    color: white !important;
-    border-radius: var(--radius-md);
-    margin: var(--spacing-base) var(--spacing-lg);
-    text-align: center;
-}
-
-nav a.btn-register:hover {
-    background-color: var(--primary-dark);
-}
-
-nav a.btn-register.active {
-    background-color: var(--primary-dark);
-    color: white;
-}
-
-/* Main Content */
+/* Main Content Wrapper */
 main {
     padding: var(--spacing-2xl) var(--spacing-base);
+    min-height: 80vh; /* Ensures footer stays at bottom on short pages */
 }
 
-/* Container */
+/* Container Utility - Centers content */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -144,518 +18,223 @@ main {
     flex-direction: column;
 }
 
-/* Grid System */
-.course-grid,
-#courses-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-}
-
 /* Sections */
 section {
     margin-bottom: var(--spacing-2xl);
 }
 
-section h1 {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-    font-size: var(--font-size-3xl);
-}
-
-/* Register Section */
-.register-section {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
-    background-color: var(--bg-lighter);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-}
-
-.register-section h1 {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-}
-
-#success-message {
-    margin-top: var(--spacing-2xl);
-    padding: var(--spacing-lg);
-    background-color: rgba(39, 174, 96, 0.05);
-    border: 1px solid var(--success);
-    border-radius: var(--radius-md);
-    text-align: center;
-}
-
-#success-message h2 {
-    color: var(--success);
-    margin-bottom: var(--spacing-base);
-}
-
-#summary-data {
-    margin-top: var(--spacing-lg);
-    text-align: left;
-    background-color: var(--bg-light);
-    padding: var(--spacing-base);
-    border-radius: var(--radius-sm);
-    font-size: var(--font-size-sm);
-    overflow-x: auto;
-}
-
-/* Details Layout */
-.details-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--spacing-2xl) var(--spacing-base);
-}
-
-.details-layout {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-2xl);
-}
-
-.main-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--spacing-lg);
-}
-
-.sidebar-card {
-    background: var(--bg-lighter);
-    padding: var(--spacing-lg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-}
-
-.sidebar-card ul {
-    list-style: none;
-    padding: 0;
-    margin: var(--spacing-lg) 0;
-}
-
-.sidebar-card li {
-    margin-bottom: var(--spacing-base);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: var(--spacing-base);
-}
-
-.sidebar-card li:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.price-tag {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: var(--spacing-base);
-}
-
-/* Footer */
-footer {
-    background-color: var(--secondary);
-    color: white;
-    text-align: center;
-    padding: var(--spacing-2xl) var(--spacing-base);
-    margin-top: var(--spacing-2xl);
-}
-
-footer p {
-    color: inherit;
-    margin-bottom: 0;
-}
-
-/* Tablet Breakpoint */
-@media (min-width: 768px) {
-    header {
-        position: relative;
-        flex-direction: row;
-        padding: var(--spacing-lg);
-    }
-
-    #mobile-menu-btn {
-        display: none;
-    }
-
-    nav {
-        display: flex !important;
-        position: static;
-        background-color: transparent;
-        border-bottom: none;
-        box-shadow: none;
-        flex-direction: row;
-        flex: 1;
-        padding: 0;
-        animation: none;
-    }
-
-    nav ul {
-        flex-direction: row;
-        gap: var(--spacing-lg);
-        width: auto;
-        padding: 0;
-    }
-
-    nav li {
-        border-bottom: none;
-    }
-
-    nav a {
-        padding: var(--spacing-base) 0;
-        border-bottom: 2px solid transparent;
-        transition: all var(--transition-fast);
-    }
-
-    nav a:hover {
-        background-color: transparent;
-        border-bottom-color: var(--primary);
-    }
-
-    nav a.active {
-        background-color: transparent;
-        border-bottom-color: var(--primary);
-    }
-
-    nav a.btn-register {
-        padding: var(--spacing-sm) var(--spacing-base);
-        border-radius: var(--radius-md);
-        margin: 0;
-    }
-
-    .course-grid,
-    #courses-grid,
-    .grid-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .register-section {
-        padding: var(--spacing-2xl);
-    }
-
-    .details-layout {
-        flex-direction: row;
-        gap: var(--spacing-2xl);
-    }
-
-    .details-content {
-        flex: 2;
-    }
-
-    .details-sidebar {
-        flex: 1;
-    }
-
-    .main-image {
-        height: 400px;
-    }
-}
-
-/* Desktop Breakpoint */
-@media (min-width: 1024px) {
-    .container {
-        flex-direction: row;
-    }
-
-    .course-grid,
-    #courses-grid,
-    .grid-container {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    main {
-        padding: var(--spacing-2xl) var(--spacing-xl);
-    }
-
-    .details-sidebar {
-        position: sticky;
-        top: var(--spacing-xl);
-    }
-
-    .details-layout {
-        align-items: flex-start;
-    }
-}
-
-/* Main Content */
-main {
-    padding: var(--spacing-2xl) var(--spacing-base);
-}
-
-/* Container */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-base);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Grid System */
-.course-grid,
-#courses-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-}
-
-/* Sections */
-section {
-    margin-bottom: var(--spacing-2xl);
-}
-
-section h1 {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-    font-size: var(--font-size-3xl);
-}
-
-/* Register Section */
-.register-section {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
-    background-color: var(--bg-lighter);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-}
-
-.register-section h1 {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-}
-
-#success-message {
-    margin-top: var(--spacing-2xl);
-    padding: var(--spacing-lg);
-    background-color: rgba(39, 174, 96, 0.05);
-    border: 1px solid var(--success);
-    border-radius: var(--radius-md);
-    text-align: center;
-}
-
-#success-message h2 {
-    color: var(--success);
-    margin-bottom: var(--spacing-base);
-}
-
-#summary-data {
-    margin-top: var(--spacing-lg);
-    text-align: left;
-    background-color: var(--bg-light);
-    padding: var(--spacing-base);
-    border-radius: var(--radius-sm);
-    font-size: var(--font-size-sm);
-    overflow-x: auto;
-}
-
-/* Details Layout */
-.details-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--spacing-2xl) var(--spacing-base);
-}
-
-.details-layout {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-2xl);
-}
-
-.main-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--spacing-lg);
-}
-
-.sidebar-card {
-    background: var(--bg-lighter);
-    padding: var(--spacing-lg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-}
-
-.sidebar-card ul {
-    list-style: none;
-    padding: 0;
-    margin: var(--spacing-lg) 0;
-}
-
-.sidebar-card li {
-    margin-bottom: var(--spacing-base);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: var(--spacing-base);
-}
-
-.sidebar-card li:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.price-tag {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: var(--spacing-base);
-}
-
-/* Footer */
-footer {
-    background-color: var(--secondary);
-    color: white;
-    text-align: center;
-    padding: var(--spacing-2xl) var(--spacing-base);
-    margin-top: var(--spacing-2xl);
-}
-
-footer p {
-    color: inherit;
-    margin-bottom: 0;
-}
-
-/* Tablet Breakpoint */
-@media (min-width: 768px) {
-    header {
-        flex-direction: row;
-        padding: var(--spacing-lg);
-    }
-
-    #mobile-menu-btn {
-        display: none;
-    }
-
-    nav {
-        display: flex;
-        flex: 1;
-    }
-
-    nav ul {
-        flex-direction: row;
-        gap: var(--spacing-lg);
-        width: auto;
-    }
-
-    nav a {
-        padding: var(--spacing-base) 0;
-        border-bottom: 2px solid transparent;
-    }
-
-    nav a:hover,
-    nav a.active {
-        border-bottom-color: var(--primary);
-    }
-
-    .course-grid,
-    #courses-grid,
-    .grid-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .register-section {
-        padding: var(--spacing-2xl);
-    }
-
-    .details-layout {
-        flex-direction: row;
-        gap: var(--spacing-2xl);
-    }
-
-    .details-content {
-        flex: 2;
-    }
-
-    .details-sidebar {
-        flex: 1;
-    }
-
-    .main-image {
-        height: 400px;
-    }
-}
-
-/* Desktop Breakpoint */
-@media (min-width: 1024px) {
-    .container {
-        flex-direction: row;
-    }
-
-    .course-grid,
-    #courses-grid,
-    .grid-container {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    main {
-        padding: var(--spacing-2xl) var(--spacing-xl);
-    }
-
-    .details-sidebar {
-        position: sticky;
-        top: var(--spacing-xl);
-    }
-
-    .details-layout {
-        align-items: flex-start;
-    }
-
-    /* rigas */
-    /* --- Γενικά --- */
-.section-padding {
-    padding: 60px 0;
-}
-
-.bg-light {
-    background-color: #f8f9fa;
-}
-
+section h1, 
 .section-title {
     text-align: center;
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 40px;
+    margin-bottom: var(--spacing-2xl);
+    font-size: var(--font-size-3xl);
+    color: var(--text-primary);
     position: relative;
 }
 
-/* Μικρή γραμμή κάτω από τον τίτλο */
+/* Decorative line under titles */
 .section-title::after {
     content: '';
     display: block;
     width: 60px;
     height: 3px;
-    background: #3498db;
+    background: var(--primary);
     margin: 10px auto 0;
 }
 
-/* --- HERO SECTION --- */
+.bg-light {
+    background-color: var(--bg-lighter);
+}
+
+.section-padding {
+    padding: 60px 0;
+}
+
+/* =========================================
+   HEADER & NAVIGATION
+   ========================================= */
+
+.main-header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* FIXED CONTAINER: 
+   1. We added width/margin here manually so we don't rely on the .container class.
+   2. flex-direction: row -> Forces Logo and Menu to be side-by-side.
+   3. justify-content: space-between -> Pushes them to opposite edges.
+*/
+.header-container {
+    display: flex;
+    flex-direction: row; /* FORCE HORIZONTAL LAYOUT */
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+    
+    /* Container properties added here manually */
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto; 
+    
+    gap: 40px; /* Prevents logo and menu from touching */
+}
+
+/* Logo Styling */
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #4a90e2; 
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.logo:hover {
+    color: #357abd;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none; 
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.bar {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    transition: all 0.3s ease;
+}
+
+/* Navigation Links (Desktop) */
+.main-nav {
+    display: block; 
+}
+
+.main-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 30px; 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+    white-space: nowrap;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #4a90e2;
+}
+
+/* Register Button Styling */
+.main-nav .btn-register {
+    background-color: #4a90e2 !important; 
+    color: white !important;              
+    padding: 10px 25px !important;       
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    
+    display: inline-block;
+    white-space: nowrap;
+    opacity: 1 !important;
+}
+
+.main-nav .btn-register:hover {
+    background-color: #357abd !important;
+    color: white !important;
+    border-bottom: none !important;
+}
+
+@media (max-width: 768px) {
+    .main-nav .btn-register {
+        margin: 15px;
+        display: block;
+        text-align: center;
+        width: auto;
+    }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (Max-width 768px)
+   ========================================= */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex; 
+    }
+
+    .main-nav {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        border-top: 1px solid #eee;
+    }
+
+    .main-nav.active {
+        display: block; 
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+
+    .main-nav li {
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 15px 20px;
+        width: 100%;
+    }
+
+    .btn-register {
+        margin: 15px 20px;
+        width: auto;
+        display: inline-block;
+    }
+}
+
+/* =========================================
+   3. HERO SECTION (Index Page)
+   ========================================= */
+
 .hero-section {
     position: relative;
-    height: 80vh; /* 80% του ύψους της οθόνης */
+    height: 80vh;
     min-height: 500px;
     background-size: cover;
     background-position: center;
+    /* Default fallback image if JS/Inline style fails */
+    background-color: var(--primary-dark); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -663,7 +242,6 @@ footer p {
     color: white;
 }
 
-/* Σκοτεινό φίλτρο πάνω από την εικόνα για να διαβάζονται τα γράμματα */
 .hero-overlay {
     position: absolute;
     top: 0;
@@ -676,15 +254,16 @@ footer p {
 
 .hero-content {
     position: relative;
-    z-index: 2; /* Πάνω από το overlay */
+    z-index: 2;
     max-width: 800px;
     padding: 20px;
 }
 
 .hero-content h1 {
-    font-size: 2.5rem; /* Μεγάλος τίτλος στο κινητό */
+    font-size: 2.5rem;
     margin-bottom: 20px;
     font-weight: 800;
+    color: white;
 }
 
 .hero-content p {
@@ -700,50 +279,59 @@ footer p {
     flex-wrap: wrap;
 }
 
-/* Κουμπιά Hero */
-.btn-primary {
-    background-color: #3498db;
-    color: white;
+.btn-primary,
+.btn-outline-white {
     padding: 12px 30px;
-    border-radius: 5px;
+    border-radius: var(--radius-md);
     text-decoration: none;
     font-weight: bold;
-    transition: background 0.3s;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    border: 2px solid var(--primary);
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
 }
 
 .btn-outline-white {
     border: 2px solid white;
     color: white;
-    padding: 12px 30px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s, color 0.3s;
 }
 
 .btn-outline-white:hover {
     background-color: white;
-    color: #333;
+    color: var(--text-primary);
 }
 
-/* --- FEATURES SECTION --- */
+/* =========================================
+   4. FEATURES & GRID SYSTEM
+   ========================================= */
+
+/* Generic Grid (Mobile First: 1 Column) */
+.course-grid,
+#courses-grid,
+.grid-container,
 .features-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 30px;
-    padding: 0 20px;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
 }
 
+/* Feature Cards (Index Page) */
 .feature-card {
     text-align: center;
     padding: 30px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    background: var(--bg-lighter);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     transition: transform 0.3s;
 }
 
@@ -756,16 +344,99 @@ footer p {
     margin-bottom: 20px;
 }
 
-.feature-card h3 {
-    margin-bottom: 15px;
-    color: #333;
+/* =========================================
+   5. REGISTER FORM
+   ========================================= */
+
+.register-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background-color: var(--bg-lighter);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
 }
 
-/* --- FOOTER --- */
+#success-message {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background-color: rgba(39, 174, 96, 0.1);
+    border: 1px solid var(--success);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+#success-message h2 {
+    color: var(--success);
+}
+
+#summary-data {
+    margin-top: var(--spacing-lg);
+    text-align: left;
+    background-color: #f8f9fa;
+    padding: var(--spacing-base);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    overflow-x: auto;
+}
+
+/* =========================================
+   6. DETAILS PAGE LAYOUT
+   ========================================= */
+
+.details-layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+}
+
+.main-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.sidebar-card {
+    background: var(--bg-lighter);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar-card ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-lg) 0;
+}
+
+.sidebar-card li {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+}
+
+.sidebar-card li:last-child {
+    border-bottom: none;
+}
+
+.price-tag {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   7. FOOTER
+   ========================================= */
+
 footer {
-    background-color: #2c3e50;
+    background-color: var(--secondary);
     color: white;
     padding: 50px 0 20px;
+    margin-top: auto;
 }
 
 .footer-content {
@@ -776,10 +447,11 @@ footer {
 }
 
 .footer-col h3 {
-    border-bottom: 2px solid #3498db;
+    border-bottom: 2px solid var(--primary);
     display: inline-block;
     padding-bottom: 10px;
     margin-bottom: 20px;
+    color: white;
 }
 
 .footer-col ul {
@@ -797,7 +469,7 @@ footer {
 }
 
 .footer-col a:hover {
-    color: #3498db;
+    color: var(--primary);
 }
 
 .footer-bottom {
@@ -809,19 +481,108 @@ footer {
     color: #bdc3c7;
 }
 
-/* --- RESPONSIVE MEDIA QUERIES --- */
+/* =========================================
+   8. MEDIA QUERIES (TABLET & DESKTOP)
+   ========================================= */
+
+/* Tablet (>= 768px) */
 @media (min-width: 768px) {
+    /* Header Fixes */
+    .mobile-menu-btn {
+        display: none; /* Hide Hamburger */
+    }
+
+    .main-nav {
+        display: block !important; /* Always show menu */
+        position: static;
+        width: auto;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        animation: none;
+    }
+
+    .main-nav ul {
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .main-nav li {
+        border: none;
+    }
+
+    .main-nav a {
+        padding: 0;
+        background: transparent !important; /* No background on hover */
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+        color: var(--primary);
+        border-bottom: 2px solid var(--primary); /* Underline effect */
+    }
+
+    .btn-register {
+        margin: 0;
+        padding: 10px 25px !important;
+        background-color: var(--primary) !important;
+        color: white !important;
+    }
+
+    /* Layout Grids */
+    .course-grid,
+    #courses-grid,
+    .grid-container,
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 Columns */
+    }
+
+    /* Hero Text */
     .hero-content h1 {
         font-size: 3.5rem;
     }
-    
-    .features-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 Στήλες σε Desktop */
+
+    /* Details Page */
+    .details-layout {
+        flex-direction: row;
     }
 
+    .details-content { flex: 2; }
+    .details-sidebar { flex: 1; }
+
+    /* Footer */
     .footer-content {
         flex-direction: row;
         justify-content: space-between;
     }
 }
+
+/* Desktop (>= 1024px) */
+@media (min-width: 1024px) {
+    .container {
+        /* On very large screens, ensure header logo/menu stays contained */
+        max-width: 1200px; 
+    }
+
+    /* Grids: 3 Columns */
+    .course-grid,
+    #courses-grid,
+    .grid-container,
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    main {
+        padding: var(--spacing-2xl) var(--spacing-xl);
+    }
+
+    .details-sidebar {
+        position: sticky;
+        top: 100px; /* Sticky sidebar */
+    }
+
+    .main-image {
+        height: 400px;
+    }
 }
