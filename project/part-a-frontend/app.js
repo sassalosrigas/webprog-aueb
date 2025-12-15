@@ -1,6 +1,10 @@
+/* =========================================
+   1. HELPER FUNCTIONS (Rendering)
+   ========================================= */
+
 /**
- * Course and Books Rendering
- * Handles dynamic rendering of courses and books to the DOM
+ * Render Courses
+ * Renders the course cards into the grid
  */
 function renderCourses(coursesList) {
     const container = document.getElementById('courses-grid');
@@ -9,7 +13,7 @@ function renderCourses(coursesList) {
     container.innerHTML = '';
 
     if (coursesList.length === 0) {
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: var(--spacing-2xl);">No courses found.</p>';
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No courses found.</p>';
         return;
     }
 
@@ -37,8 +41,8 @@ function renderCourses(coursesList) {
 }
 
 /**
- * Books Rendering
- * Handles dynamic rendering of books to the DOM
+ * Render Books
+ * Renders the book cards into the grid
  */
 function renderBooks(booksList) {
     const container = document.getElementById('books-grid');
@@ -47,14 +51,13 @@ function renderBooks(booksList) {
     container.innerHTML = '';
 
     if (booksList.length === 0) {
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: var(--spacing-2xl);">No books found.</p>';
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No books found.</p>';
         return;
     }
 
     booksList.forEach(book => {
         const bookCard = `
-            <article class="course-card">
-                <div class="card-header">
+            <article class="course-card"> <div class="card-header">
                     <img src="${book.image}" alt="${book.title}" loading="lazy">
                     <span class="badge ${book.level.toLowerCase()}">${book.level}</span>
                 </div>
@@ -75,113 +78,128 @@ function renderBooks(booksList) {
 }
 
 /**
- * Category Name Mapper
- * Converts category slugs to readable names
+ * Helper: Get Readable Category Name
  */
 function getCategoryName(catSlug) {
     const names = {
         'web-dev': 'Web Development',
         'programming': 'Programming',
-        'security': 'Security',
+        'security': 'Cybersecurity',
         'databases': 'Databases'
     };
     return names[catSlug] || catSlug;
 }
 
-/**
- * Courses Page Initialization
- */
+
+/* =========================================
+   2. MAIN LOGIC (Page Detection)
+   ========================================= */
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- A. LOGIC FOR COURSES (Home Page vs Courses Page) ---
     const coursesContainer = document.getElementById('courses-grid');
-    if (!coursesContainer) return;
     
-    renderCourses(courses);
+    if (coursesContainer) {
+        // We look for the search input to decide which page we are on
+        const searchInput = document.getElementById('searchInput');
+        const categorySelect = document.getElementById('categorySelect');
+        const levelSelect = document.getElementById('levelSelect');
+        const clearBtn = document.getElementById('clearFiltersBtn');
 
-    const searchInput = document.getElementById('searchInput');
-    const categorySelect = document.getElementById('categorySelect');
-    const levelSelect = document.getElementById('levelSelect');
-    const clearBtn = document.getElementById('clearFiltersBtn');
+        if (!searchInput) {
+            // CASE 1: HOME PAGE
+            // Search input doesn't exist, so we are on Index.
+            // Show only the first 3 courses.
+            if (typeof courses !== 'undefined') {
+                renderCourses(courses.slice(0, 3));
+            }
+        } else {
+            // CASE 2: COURSES PAGE
+            // Search input exists, so we are on Courses page.
+            // 1. Show ALL courses
+            if (typeof courses !== 'undefined') {
+                renderCourses(courses);
+            }
 
-    function filterCourses() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const selectedCategory = categorySelect.value;
-        const selectedLevel = levelSelect.value;
+            // 2. Define Filter Function
+            function filterCourses() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedCategory = categorySelect.value;
+                const selectedLevel = levelSelect.value;
 
-        const filteredData = courses.filter(course => {
-            const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
-                                 course.description.toLowerCase().includes(searchTerm);
-            
-            const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
+                const filteredData = courses.filter(course => {
+                    const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
+                                          course.description.toLowerCase().includes(searchTerm);
+                    const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
+                    const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
 
-            const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
+                    return matchesSearch && matchesCategory && matchesLevel;
+                });
 
-            return matchesSearch && matchesCategory && matchesLevel;
-        });
+                renderCourses(filteredData);
+            }
 
-        renderCourses(filteredData);
+            // 3. Attach Event Listeners
+            searchInput.addEventListener('input', filterCourses);
+            categorySelect.addEventListener('change', filterCourses);
+            levelSelect.addEventListener('change', filterCourses);
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                categorySelect.value = 'all';
+                levelSelect.value = 'all';
+                renderCourses(courses);
+            });
+        }
     }
 
-    searchInput.addEventListener('input', filterCourses);
-    categorySelect.addEventListener('change', filterCourses);
-    levelSelect.addEventListener('change', filterCourses);
-
-    clearBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        categorySelect.value = 'all';
-        levelSelect.value = 'all';
-        renderCourses(courses);
-    });
-});
-
-/**
- * Books Page Initialization
- */
-document.addEventListener('DOMContentLoaded', () => {
+    // --- B. LOGIC FOR BOOKS PAGE ---
     const booksContainer = document.getElementById('books-grid');
-    if (!booksContainer) return;
     
-    renderBooks(books);
+    if (booksContainer) {
+        const searchInput = document.getElementById('searchInput'); // Books page also has search
+        const categorySelect = document.getElementById('categorySelect');
+        const levelSelect = document.getElementById('levelSelect');
+        const clearBtn = document.getElementById('clearFiltersBtn');
 
-    const searchInput = document.getElementById('searchInput');
-    const categorySelect = document.getElementById('categorySelect');
-    const levelSelect = document.getElementById('levelSelect');
-    const clearBtn = document.getElementById('clearFiltersBtn');
+        // Initial Render
+        if (typeof books !== 'undefined') {
+            renderBooks(books);
+        }
 
-    function filterBooks() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const selectedCategory = categorySelect.value;
-        const selectedLevel = levelSelect.value;
+        if (searchInput) {
+            function filterBooks() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedCategory = categorySelect.value;
+                const selectedLevel = levelSelect.value;
 
-        const filteredData = books.filter(book => {
-            const matchesSearch = book.title.toLowerCase().includes(searchTerm) || 
-                                 book.description.toLowerCase().includes(searchTerm);
-            
-            const matchesCategory = selectedCategory === 'all' || book.category === selectedCategory;
+                const filteredData = books.filter(book => {
+                    const matchesSearch = book.title.toLowerCase().includes(searchTerm) || 
+                                          book.description.toLowerCase().includes(searchTerm);
+                    const matchesCategory = selectedCategory === 'all' || book.category === selectedCategory;
+                    const matchesLevel = selectedLevel === 'all' || book.level === selectedLevel;
 
-            const matchesLevel = selectedLevel === 'all' || book.level === selectedLevel;
+                    return matchesSearch && matchesCategory && matchesLevel;
+                });
 
-            return matchesSearch && matchesCategory && matchesLevel;
-        });
+                renderBooks(filteredData);
+            }
 
-        renderBooks(filteredData);
+            searchInput.addEventListener('input', filterBooks);
+            categorySelect.addEventListener('change', filterBooks);
+            levelSelect.addEventListener('change', filterBooks);
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                categorySelect.value = 'all';
+                levelSelect.value = 'all';
+                renderBooks(books);
+            });
+        }
     }
 
-    searchInput.addEventListener('input', filterBooks);
-    categorySelect.addEventListener('change', filterBooks);
-    levelSelect.addEventListener('change', filterBooks);
-
-    clearBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        categorySelect.value = 'all';
-        levelSelect.value = 'all';
-        renderBooks(books);
-    });
-});
-
-/**
- * Course Details Page Initialization
- */
-document.addEventListener('DOMContentLoaded', () => {
+    // --- C. LOGIC FOR COURSE DETAILS PAGE ---
     const titleElement = document.getElementById('course-title');
     
     if (titleElement) {
@@ -189,36 +207,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+/* =========================================
+   3. DETAILS PAGE LOGIC
+   ========================================= */
+
 function loadCourseDetails() {
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get('id');
 
+    // Use loose equality (==) because params are strings and IDs might be numbers
     const course = courses.find(c => c.id == courseId);
 
     if (!course) {
-        document.querySelector('.details-container').innerHTML = '<h2 style="padding: var(--spacing-2xl);">The course was not found. <a href="courses.html">Return</a></h2>';
+        const container = document.querySelector('.details-container') || document.body;
+        container.innerHTML = '<h2 style="text-align:center; padding: 50px;">Course not found. <a href="courses.html">Return</a></h2>';
         return;
     }
 
-    document.getElementById('course-title').textContent = course.title;
-    document.getElementById('course-category').textContent = course.category;
-    document.getElementById('course-desc').textContent = course.description;
-    document.getElementById('course-long-desc').textContent = course.longDescription || course.description;
-    document.getElementById('course-image').src = course.image;
-    document.getElementById('course-image').alt = course.title;
-    
-    document.getElementById('course-price').textContent = course.price;
-    document.getElementById('course-duration').textContent = course.duration || "N/A";
-    document.getElementById('course-level').textContent = course.level;
-    document.getElementById('course-instructor').textContent = course.instructor || "E-Learning Team";
+    // Fill Data
+    const elTitle = document.getElementById('course-title');
+    if (elTitle) elTitle.textContent = course.title;
 
+    const elCat = document.getElementById('course-category');
+    if (elCat) elCat.textContent = getCategoryName(course.category);
+
+    const elDesc = document.getElementById('course-desc');
+    if (elDesc) elDesc.textContent = course.description;
+
+    const elLongDesc = document.getElementById('course-long-desc');
+    if (elLongDesc) elLongDesc.textContent = course.longDescription || course.description;
+
+    const elImg = document.getElementById('course-image');
+    if (elImg) {
+        elImg.src = course.image;
+        elImg.alt = course.title;
+    }
+    
+    const elPrice = document.getElementById('course-price');
+    if (elPrice) elPrice.textContent = course.price;
+
+    const elDuration = document.getElementById('course-duration');
+    if (elDuration) elDuration.textContent = course.duration || "N/A";
+
+    const elLevel = document.getElementById('course-level');
+    if (elLevel) elLevel.textContent = course.level;
+
+    const elInstr = document.getElementById('course-instructor');
+    if (elInstr) elInstr.textContent = course.instructor || "E-Learning Team";
+
+    // Syllabus Loop
     const syllabusContainer = document.getElementById('course-syllabus');
-    if (course.syllabus) {
+    if (syllabusContainer && course.syllabus) {
+        syllabusContainer.innerHTML = ''; // Clear previous items
         course.syllabus.forEach(item => {
             const li = document.createElement('li');
             li.textContent = item;
-            li.style.marginBottom = 'var(--spacing-base)';
-            li.style.paddingLeft = 'var(--spacing-base)';
+            li.style.marginBottom = '10px';
+            li.style.paddingLeft = '10px';
             syllabusContainer.appendChild(li);
         });
     }

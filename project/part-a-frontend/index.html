@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Learning Platform</title>
+    <title>E-Learn | Digital Learning</title>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/theme.css">
     <link rel="stylesheet" href="assets/css/layout.css">
@@ -11,32 +11,108 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo">E-Learn</div>
-        <button id="mobile-menu-btn" aria-label="Menu">☰</button>
-        <nav id="main-nav">
-            <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="courses.html">Courses</a></li>
-                <li><a href="books.html">Books</a></li>
-                <li><a href="about.html">The Team</a></li>
-                <li><a href="register.html" class="btn-register">Register</a></li>
-            </ul>
-        </nav>
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">E-Learn</a>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="about.html">The Team</a></li>
+                    <li><a href="register.html" class="btn-register">Register</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section id="hero">...</section>
-        <section id="featured-courses">
-            </section>
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <h1>Learn Computer Science from the Best</h1>
+                <p>Discover courses in Programming, Cybersecurity, and Web Development. Start your career today.</p>
+                <div class="hero-buttons">
+                    <a href="courses.html" class="btn-primary">View Courses</a>
+                    <a href="register.html" class="btn-outline-white">Join Now</a>
+                </div>
+            </div>
+            <div class="hero-overlay"></div>
+        </section>
+
+        <section id="features" class="container section-padding">
+            <h2 class="section-title">Why Choose Us</h2>
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="icon">💻</div>
+                    <h3>Hands-on Practice</h3>
+                    <p>Learn by writing code, not just reading theory. Real-world projects.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Certified Instructors</h3>
+                    <p>Taught by industry professionals with experience in top companies.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="icon">⏰</div>
+                    <h3>Flexible Schedule</h3>
+                    <p>Watch videos and read books whenever and wherever you want.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="featured-courses" class="bg-light section-padding">
+            <div class="container">
+                <h2 class="section-title">Popular Courses</h2>
+                <div id="courses-grid" class="grid-container">
+                    </div>
+                <div class="text-center" style="margin-top: 30px;">
+                    <a href="courses.html" class="btn-link">View All Courses →</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 E-Learning Service</p>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>E-Learn</h3>
+                <p>The leading platform for Computer Science education.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p>info@elearn.gr</p>
+                <p>+30 210 1234567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 E-Learning Service. All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="assets/js/data/courses.js"></script> 
     <script src="assets/js/ui/menu.js"></script>
     <script src="app.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof renderCourses === 'function' && typeof courses !== 'undefined') {
+                const featured = courses.slice(0, 3);
+                renderCourses(featured);
+            }
+        });
+    </script>
 </body>
 </html>
