@@ -1,11 +1,3 @@
-/* =========================================
-   1. HELPER FUNCTIONS (Rendering)
-   ========================================= */
-
-/**
- * Render Courses
- * Renders the course cards into the grid
- */
 function renderCourses(coursesList) {
     const container = document.getElementById('courses-grid');
     if (!container) return;
@@ -40,10 +32,6 @@ function renderCourses(coursesList) {
     });
 }
 
-/**
- * Render Books
- * Renders the book cards into the grid
- */
 function renderBooks(booksList) {
     const container = document.getElementById('books-grid');
     if (!container) return;
@@ -77,9 +65,6 @@ function renderBooks(booksList) {
     });
 }
 
-/**
- * Helper: Get Readable Category Name
- */
 function getCategoryName(catSlug) {
     const names = {
         'web-dev': 'Web Development',
@@ -97,32 +82,23 @@ function getCategoryName(catSlug) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- A. LOGIC FOR COURSES (Home Page vs Courses Page) ---
     const coursesContainer = document.getElementById('courses-grid');
     
     if (coursesContainer) {
-        // We look for the search input to decide which page we are on
         const searchInput = document.getElementById('searchInput');
         const categorySelect = document.getElementById('categorySelect');
         const levelSelect = document.getElementById('levelSelect');
         const clearBtn = document.getElementById('clearFiltersBtn');
 
         if (!searchInput) {
-            // CASE 1: HOME PAGE
-            // Search input doesn't exist, so we are on Index.
-            // Show only the first 3 courses.
             if (typeof courses !== 'undefined') {
                 renderCourses(courses.slice(0, 3));
             }
         } else {
-            // CASE 2: COURSES PAGE
-            // Search input exists, so we are on Courses page.
-            // 1. Show ALL courses
             if (typeof courses !== 'undefined') {
                 renderCourses(courses);
             }
 
-            // 2. Define Filter Function
             function filterCourses() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
                 const selectedCategory = categorySelect.value;
@@ -140,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCourses(filteredData);
             }
 
-            // 3. Attach Event Listeners
             searchInput.addEventListener('input', filterCourses);
             categorySelect.addEventListener('change', filterCourses);
             levelSelect.addEventListener('change', filterCourses);
@@ -154,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- B. LOGIC FOR BOOKS PAGE ---
     const booksContainer = document.getElementById('books-grid');
     
     if (booksContainer) {
@@ -163,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const levelSelect = document.getElementById('levelSelect');
         const clearBtn = document.getElementById('clearFiltersBtn');
 
-        // Initial Render
         if (typeof books !== 'undefined') {
             renderBooks(books);
         }
@@ -199,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- C. LOGIC FOR COURSE DETAILS PAGE ---
     const titleElement = document.getElementById('course-title');
     
     if (titleElement) {
@@ -216,7 +188,6 @@ function loadCourseDetails() {
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get('id');
 
-    // Use loose equality (==) because params are strings and IDs might be numbers
     const course = courses.find(c => c.id == courseId);
 
     if (!course) {
@@ -225,7 +196,6 @@ function loadCourseDetails() {
         return;
     }
 
-    // Fill Data
     const elTitle = document.getElementById('course-title');
     if (elTitle) elTitle.textContent = course.title;
 
@@ -256,10 +226,9 @@ function loadCourseDetails() {
     const elInstr = document.getElementById('course-instructor');
     if (elInstr) elInstr.textContent = course.instructor || "E-Learning Team";
 
-    // Syllabus Loop
     const syllabusContainer = document.getElementById('course-syllabus');
     if (syllabusContainer && course.syllabus) {
-        syllabusContainer.innerHTML = ''; // Clear previous items
+        syllabusContainer.innerHTML = '';
         course.syllabus.forEach(item => {
             const li = document.createElement('li');
             li.textContent = item;

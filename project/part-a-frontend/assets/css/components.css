@@ -196,7 +196,6 @@ input[type="checkbox"] {
     accent-color: var(--primary);
 }
 
-/* Course Card */
 .course-card {
     background: var(--bg-lighter);
     border: 1px solid var(--border);
@@ -289,7 +288,6 @@ input[type="checkbox"] {
     color: var(--primary);
 }
 
-/* Filters Section */
 .filters-section {
     background-color: var(--bg-lighter);
     padding: var(--spacing-lg);
@@ -352,7 +350,6 @@ input[type="checkbox"] {
     }
 }
 
-/* Utility Classes */
 .hidden {
     display: none;
 }

@@ -1,14 +1,11 @@
 /* =========================================
    1. GLOBAL LAYOUT & MAIN CONTAINER
    ========================================= */
-
-/* Main Content Wrapper */
 main {
     padding: var(--spacing-2xl) var(--spacing-base);
-    min-height: 80vh; /* Ensures footer stays at bottom on short pages */
+    min-height: 80vh;
 }
 
-/* Container Utility - Centers content */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -18,7 +15,6 @@ main {
     flex-direction: column;
 }
 
-/* Sections */
 section {
     margin-bottom: var(--spacing-2xl);
 }
@@ -32,7 +28,6 @@ section h1,
     position: relative;
 }
 
-/* Decorative line under titles */
 .section-title::after {
     content: '';
     display: block;
@@ -64,27 +59,18 @@ section h1,
     border-bottom: 1px solid #e0e0e0;
 }
 
-/* FIXED CONTAINER: 
-   1. We added width/margin here manually so we don't rely on the .container class.
-   2. flex-direction: row -> Forces Logo and Menu to be side-by-side.
-   3. justify-content: space-between -> Pushes them to opposite edges.
-*/
 .header-container {
     display: flex;
-    flex-direction: row; /* FORCE HORIZONTAL LAYOUT */
+    flex-direction: row;
     justify-content: space-between; 
     align-items: center;
     padding: 10px 20px;
-    
-    /* Container properties added here manually */
     width: 100%;
     max-width: 1200px; 
     margin: 0 auto; 
-    
-    gap: 40px; /* Prevents logo and menu from touching */
+    gap: 40px;
 }
 
-/* Logo Styling */
 .logo {
     font-size: 1.8rem;
     font-weight: 800;
@@ -98,7 +84,6 @@ section h1,
     color: #357abd;
 }
 
-/* Mobile Menu Button */
 .mobile-menu-btn {
     display: none; 
     flex-direction: column;
@@ -118,7 +103,6 @@ section h1,
     transition: all 0.3s ease;
 }
 
-/* Navigation Links (Desktop) */
 .main-nav {
     display: block; 
 }
@@ -147,7 +131,6 @@ section h1,
     color: #4a90e2;
 }
 
-/* Register Button Styling */
 .main-nav .btn-register {
     background-color: #4a90e2 !important; 
     color: white !important;              
@@ -181,17 +164,15 @@ section h1,
    ========================================= */
 @media (max-width: 768px) {
     
-    /* 1. Show the Hamburger Button */
     .mobile-menu-btn {
         display: flex; 
-        z-index: 1001; /* Ensure it's clickable */
+        z-index: 1001;
     }
 
-    /* 2. Hide the Menu by default */
     .main-nav {
         display: none; 
         position: absolute;
-        top: 100%; /* Push it below the header */
+        top: 100%;
         left: 0;
         width: 100%;
         background-color: white;
@@ -200,9 +181,8 @@ section h1,
         z-index: 999;
     }
 
-    /* 3. SHOW the Menu when 'active' class is added by JS */
     .main-nav.active {
-        display: flex !important; /* Force it to show */
+        display: flex !important;
         flex-direction: column;
     }
 
@@ -225,9 +205,8 @@ section h1,
         width: 100%;
     }
 
-    /* Fix the Register Button on Mobile */
     .main-nav .btn-register {
-        margin: 15px auto; /* Center it */
+        margin: 15px auto;
         display: inline-block;
         width: auto;
     }
@@ -243,7 +222,6 @@ section h1,
     min-height: 500px;
     background-size: cover;
     background-position: center;
-    /* Default fallback image if JS/Inline style fails */
     background-color: var(--primary-dark); 
     display: flex;
     align-items: center;
@@ -323,8 +301,6 @@ section h1,
 /* =========================================
    4. FEATURES & GRID SYSTEM
    ========================================= */
-
-/* Generic Grid (Mobile First: 1 Column) */
 .course-grid,
 #courses-grid,
 .grid-container,
@@ -335,7 +311,6 @@ section h1,
     margin-bottom: var(--spacing-2xl);
 }
 
-/* Feature Cards (Index Page) */
 .feature-card {
     text-align: center;
     padding: 30px;
@@ -497,13 +472,12 @@ footer {
 
 /* Tablet (>= 768px) */
 @media (min-width: 768px) {
-    /* Header Fixes */
     .mobile-menu-btn {
-        display: none; /* Hide Hamburger */
+        display: none;
     }
 
     .main-nav {
-        display: block !important; /* Always show menu */
+        display: block !important;
         position: static;
         width: auto;
         background: transparent;
@@ -524,13 +498,13 @@ footer {
 
     .main-nav a {
         padding: 0;
-        background: transparent !important; /* No background on hover */
+        background: transparent !important;
     }
 
     .main-nav a:hover,
     .main-nav a.active {
         color: var(--primary);
-        border-bottom: 2px solid var(--primary); /* Underline effect */
+        border-bottom: 2px solid var(--primary);
     }
 
     .btn-register {
@@ -540,20 +514,17 @@ footer {
         color: white !important;
     }
 
-    /* Layout Grids */
     .course-grid,
     #courses-grid,
     .grid-container,
     .features-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 Columns */
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    /* Hero Text */
     .hero-content h1 {
         font-size: 3.5rem;
     }
 
-    /* Details Page */
     .details-layout {
         flex-direction: row;
     }
@@ -571,11 +542,9 @@ footer {
 /* Desktop (>= 1024px) */
 @media (min-width: 1024px) {
     .container {
-        /* On very large screens, ensure header logo/menu stays contained */
         max-width: 1200px; 
     }
 
-    /* Grids: 3 Columns */
     .course-grid,
     #courses-grid,
     .grid-container,
@@ -589,7 +558,7 @@ footer {
 
     .details-sidebar {
         position: sticky;
-        top: 100px; /* Sticky sidebar */
+        top: 100px;
     }
 
     .main-image {
