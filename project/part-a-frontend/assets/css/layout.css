@@ -1,94 +1,567 @@
-/* mobile first */
+/* =========================================
+   1. GLOBAL LAYOUT & MAIN CONTAINER
+   ========================================= */
+main {
+    padding: var(--spacing-2xl) var(--spacing-base);
+    min-height: 80vh;
+}
+
 .container {
-    display: flex;
-    flex-direction: column; 
-    padding: 1rem;
-}
-
-.course-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-/* tablet */
-@media (min-width: 768px) {
-    .course-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* desktop */
-@media (min-width: 1024px) {
-    .container {
-        flex-direction: row; 
-    }
-    
-    .course-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-.details-container {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 var(--spacing-base);
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    margin-bottom: var(--spacing-2xl);
+}
+
+section h1, 
+.section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    font-size: var(--font-size-3xl);
+    color: var(--text-primary);
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--primary);
+    margin: 10px auto 0;
+}
+
+.bg-light {
+    background-color: var(--bg-lighter);
+}
+
+.section-padding {
+    padding: 60px 0;
+}
+
+/* =========================================
+   HEADER & NAVIGATION
+   ========================================= */
+
+.main-header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto; 
+    gap: 40px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #4a90e2; 
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.logo:hover {
+    color: #357abd;
+}
+
+.mobile-menu-btn {
+    display: none; 
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.bar {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    transition: all 0.3s ease;
+}
+
+.main-nav {
+    display: block; 
+}
+
+.main-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 30px; 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+    white-space: nowrap;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #4a90e2;
+}
+
+.main-nav .btn-register {
+    background-color: #4a90e2 !important; 
+    color: white !important;              
+    padding: 10px 25px !important;       
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    
+    display: inline-block;
+    white-space: nowrap;
+    opacity: 1 !important;
+}
+
+.main-nav .btn-register:hover {
+    background-color: #357abd !important;
+    color: white !important;
+    border-bottom: none !important;
+}
+
+@media (max-width: 768px) {
+    .main-nav .btn-register {
+        margin: 15px;
+        display: block;
+        text-align: center;
+        width: auto;
+    }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (Max-width 768px)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    .mobile-menu-btn {
+        display: flex; 
+        z-index: 1001;
+    }
+
+    .main-nav {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        border-top: 1px solid #eee;
+        z-index: 999;
+    }
+
+    .main-nav.active {
+        display: flex !important;
+        flex-direction: column;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-nav li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 15px;
+        width: 100%;
+    }
+
+    .main-nav .btn-register {
+        margin: 15px auto;
+        display: inline-block;
+        width: auto;
+    }
+}
+
+/* =========================================
+   3. HERO SECTION (Index Page)
+   ========================================= */
+
+.hero-section {
+    position: relative;
+    height: 80vh;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--primary-dark); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
     padding: 20px;
 }
 
-.main-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 30px;
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+    color: white;
 }
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #f0f0f0;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-outline-white {
+    padding: 12px 30px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    border: 2px solid var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-outline-white {
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-outline-white:hover {
+    background-color: white;
+    color: var(--text-primary);
+}
+
+/* =========================================
+   4. FEATURES & GRID SYSTEM
+   ========================================= */
+.course-grid,
+#courses-grid,
+.grid-container,
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.feature-card {
+    text-align: center;
+    padding: 30px;
+    background: var(--bg-lighter);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card .icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   5. REGISTER FORM
+   ========================================= */
+
+.register-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background-color: var(--bg-lighter);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+#success-message {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background-color: rgba(39, 174, 96, 0.1);
+    border: 1px solid var(--success);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+#success-message h2 {
+    color: var(--success);
+}
+
+#summary-data {
+    margin-top: var(--spacing-lg);
+    text-align: left;
+    background-color: #f8f9fa;
+    padding: var(--spacing-base);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    overflow-x: auto;
+}
+
+/* =========================================
+   6. DETAILS PAGE LAYOUT
+   ========================================= */
 
 .details-layout {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: var(--spacing-2xl);
+}
+
+.main-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
 }
 
 .sidebar-card {
-    background: #f8f9fa;
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    background: var(--bg-lighter);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
 }
 
 .sidebar-card ul {
     list-style: none;
     padding: 0;
-    margin: 20px 0;
+    margin: var(--spacing-lg) 0;
 }
 
 .sidebar-card li {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+}
+
+.sidebar-card li:last-child {
+    border-bottom: none;
 }
 
 .price-tag {
     font-size: 2rem;
-    font-weight: bold;
-    color: #2c3e50;
+    font-weight: 700;
+    color: var(--primary);
     margin-bottom: 10px;
 }
 
-@media (min-width: 1024px) {
-    .details-layout {
-        flex-direction: row;
-        align-items: flex-start;
+/* =========================================
+   7. FOOTER
+   ========================================= */
+
+footer {
+    background-color: var(--secondary);
+    color: white;
+    padding: 50px 0 20px;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.footer-col h3 {
+    border-bottom: 2px solid var(--primary);
+    display: inline-block;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+.footer-col a:hover {
+    color: var(--primary);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+/* =========================================
+   8. MEDIA QUERIES (TABLET & DESKTOP)
+   ========================================= */
+
+/* Tablet (>= 768px) */
+@media (min-width: 768px) {
+    .mobile-menu-btn {
+        display: none;
     }
 
-    .details-content {
-        flex: 2;
+    .main-nav {
+        display: block !important;
+        position: static;
+        width: auto;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        animation: none;
+    }
+
+    .main-nav ul {
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .main-nav li {
+        border: none;
+    }
+
+    .main-nav a {
+        padding: 0;
+        background: transparent !important;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+        color: var(--primary);
+        border-bottom: 2px solid var(--primary);
+    }
+
+    .btn-register {
+        margin: 0;
+        padding: 10px 25px !important;
+        background-color: var(--primary) !important;
+        color: white !important;
+    }
+
+    .course-grid,
+    #courses-grid,
+    .grid-container,
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .details-layout {
+        flex-direction: row;
+    }
+
+    .details-content { flex: 2; }
+    .details-sidebar { flex: 1; }
+
+    /* Footer */
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* Desktop (>= 1024px) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px; 
+    }
+
+    .course-grid,
+    #courses-grid,
+    .grid-container,
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    main {
+        padding: var(--spacing-2xl) var(--spacing-xl);
     }
 
     .details-sidebar {
-        flex: 1;
         position: sticky;
-        top: 20px;
+        top: 100px;
+    }
+
+    .main-image {
+        height: 400px;
     }
 }

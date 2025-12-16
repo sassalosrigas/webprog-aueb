@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Διαχείριση Υποβολής Φόρμας
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
