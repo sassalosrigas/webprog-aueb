@@ -13,21 +13,14 @@ function renderCourses(coursesList) {
         const courseCard = `
             <article class="course-card">
                 <div class="card-header">
-                    <img src="${course.image}" alt="${course.title}" loading="lazy">
+                    <img src="${course.image}" 
+                         srcset="${course.image} 400w, ${course.image} 800w" 
+                         sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                         alt="${course.title}" loading="lazy">
                     <span class="badge ${course.level.toLowerCase()}">${course.level}</span>
                 </div>
-                <div class="card-body">
-                    <span class="category">${getCategoryName(course.category)}</span>
-                    <h3>${course.title}</h3>
-                    <p>${course.description}</p>
-                    <div class="card-footer">
-                        <span class="price">${course.price}</span>
-                        <a href="course-details.html?id=${course.id}" class="btn-outline">Details</a>
-                    </div>
-                </div>
-            </article>
+                </article>
         `;
-        
         container.insertAdjacentHTML('beforeend', courseCard);
     });
 }
@@ -65,6 +58,46 @@ function renderBooks(booksList) {
         container.insertAdjacentHTML('beforeend', bookCard);
     });
 }
+/* Videos rendering function (might need to get deleted) 
+function renderVideos(videoList) {
+    const container = document.getElementById('videos-grid');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (videoList.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No videos found.</p>';
+        return;
+    }
+
+    videoList.forEach(video => {
+        const videoCard = `
+            <article class="course-card">
+                <div class="card-header">
+                    <img src="${video.image}" alt="${video.title}" loading="lazy">
+                    <span class="badge ${video.level.toLowerCase()}">${video.level}</span>
+                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">
+                        ${video.duration}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <span class="category">${getCategoryName(video.category)}</span>
+                    <h3>${video.title}</h3>
+                    <p>${video.description}</p>
+                    <div class="card-footer">
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">
+                            👁 ${video.views} views
+                        </span>
+                        <button class="btn-outline">Watch Now</button>
+                    </div>
+                </div>
+            </article>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', videoCard);
+    });
+}
+*/
 
 function getCategoryName(catSlug) {
     const names = {
@@ -172,6 +205,50 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+/* Videos Page Logic (might need to get deleted)
+    const videosContainer = document.getElementById('videos-grid');
+    
+    if (videosContainer) {
+        if (typeof videos !== 'undefined') {
+            renderVideos(videos);
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const categorySelect = document.getElementById('categorySelect');
+        const levelSelect = document.getElementById('levelSelect');
+        const clearBtn = document.getElementById('clearFiltersBtn');
+
+        if (searchInput) {
+            function filterVideos() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedCategory = categorySelect.value;
+                const selectedLevel = levelSelect.value;
+
+                const filteredData = videos.filter(video => {
+                    const matchesSearch = video.title.toLowerCase().includes(searchTerm) || 
+                                          video.description.toLowerCase().includes(searchTerm);
+                    const matchesCategory = selectedCategory === 'all' || video.category === selectedCategory;
+                    const matchesLevel = selectedLevel === 'all' || video.level === selectedLevel;
+
+                    return matchesSearch && matchesCategory && matchesLevel;
+                });
+
+                renderVideos(filteredData);
+            }
+
+            searchInput.addEventListener('input', filterVideos);
+            categorySelect.addEventListener('change', filterVideos);
+            levelSelect.addEventListener('change', filterVideos);
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                categorySelect.value = 'all';
+                levelSelect.value = 'all';
+                renderVideos(videos);
+            });
+        }
+    }
+*/
 
     const titleElement = document.getElementById('course-title');
     
