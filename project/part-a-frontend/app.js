@@ -45,7 +45,8 @@ function renderBooks(booksList) {
 
     booksList.forEach(book => {
         const bookCard = `
-            <article class="course-card"> <div class="card-header">
+            <article class="book-card">
+                <div class="card-header">
                     <img src="${book.image}" alt="${book.title}" loading="lazy">
                     <span class="badge ${book.level.toLowerCase()}">${book.level}</span>
                 </div>
@@ -177,6 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (titleElement) {
         loadCourseDetails();
     }
+
+    const bookTitleElement = document.getElementById('book-title');
+    
+    if (bookTitleElement) {
+        loadBookDetails();
+    }
 });
 
 
@@ -230,6 +237,68 @@ function loadCourseDetails() {
     if (syllabusContainer && course.syllabus) {
         syllabusContainer.innerHTML = '';
         course.syllabus.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            li.style.marginBottom = '10px';
+            li.style.paddingLeft = '10px';
+            syllabusContainer.appendChild(li);
+        });
+    }
+}
+
+/* =========================================
+   4. BOOK DETAILS PAGE LOGIC
+   ========================================= */
+
+function loadBookDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const bookId = params.get('id');
+
+    const book = books.find(b => b.id == bookId);
+
+    if (!book) {
+        const container = document.querySelector('.details-container') || document.body;
+        container.innerHTML = '<h2 style="text-align:center; padding: 50px;">Book not found. <a href="books.html">Return</a></h2>';
+        return;
+    }
+
+    const elTitle = document.getElementById('book-title');
+    if (elTitle) elTitle.textContent = book.title;
+
+    const elCat = document.getElementById('book-category');
+    if (elCat) elCat.textContent = getCategoryName(book.category);
+
+    const elDesc = document.getElementById('book-desc');
+    if (elDesc) elDesc.textContent = book.description;
+
+    const elLongDesc = document.getElementById('book-long-desc');
+    if (elLongDesc) elLongDesc.textContent = book.longDescription || book.description;
+
+    const elImg = document.getElementById('book-image');
+    if (elImg) {
+        elImg.src = book.image;
+        elImg.alt = book.title;
+    }
+    
+    const elPrice = document.getElementById('book-price');
+    if (elPrice) elPrice.textContent = book.price;
+
+    const elPages = document.getElementById('book-pages');
+    if (elPages) elPages.textContent = book.pages || "N/A";
+
+    const elLevel = document.getElementById('book-level');
+    if (elLevel) elLevel.textContent = book.level;
+
+    const elAuthor = document.getElementById('book-author');
+    if (elAuthor) elAuthor.textContent = book.author || "E-Learning Team";
+
+    const elISBN = document.getElementById('book-isbn');
+    if (elISBN) elISBN.textContent = book.isbn || "N/A";
+
+    const syllabusContainer = document.getElementById('book-syllabus');
+    if (syllabusContainer && book.syllabus) {
+        syllabusContainer.innerHTML = '';
+        book.syllabus.forEach(item => {
             const li = document.createElement('li');
             li.textContent = item;
             li.style.marginBottom = '10px';
