@@ -1,4 +1,52 @@
-function renderCourses(coursesList) {
+/* =========================================
+   1. UTILITY FUNCTIONS
+   ========================================= */
+
+function getCategoryName(catSlug) {
+    const names = {
+        'web-dev': 'Web Development',
+        'programming': 'Programming',
+        'security': 'Cybersecurity',
+        'databases': 'Databases'
+    };
+    return names[catSlug] || catSlug;
+}
+
+/* =========================================
+   2. PAGE DETECTION
+   ========================================= */
+
+function detectCurrentPage() {
+    return {
+        isCoursesPage: !!document.getElementById('courses-grid'),
+        isBooksPage: !!document.getElementById('books-grid'),
+        isCourseDetailsPage: !!document.getElementById('course-title'),
+        isBookDetailsPage: !!document.getElementById('book-title'),
+        isHomePage: document.body.querySelector('.hero-section') !== null
+    };
+}
+
+/* =========================================
+   3. MENU INITIALIZATION
+   ========================================= */
+
+function initializeMenu() {
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('.main-nav');
+
+    if (menuBtn && nav) {
+        menuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            nav.classList.toggle('active');
+        });
+    }
+}
+
+/* =========================================
+   4. RENDERING FUNCTIONS
+   ========================================= */
+
+function renderCourses(coursesList, isFeatured = true) {
     const container = document.getElementById('courses-grid');
     if (!container) return;
 
@@ -10,6 +58,19 @@ function renderCourses(coursesList) {
     }
 
     coursesList.forEach(course => {
+        // Show card body with footer only on courses listing page (not featured/home)
+        const cardBody = isFeatured ? '' : `
+            <div class="card-body">
+                <span class="category">${getCategoryName(course.category)}</span>
+                <h3>${course.title}</h3>
+                <p>${course.description}</p>
+                <div class="card-footer">
+                    <span class="price">${course.price}</span>
+                    <a href="course-details.html?id=${course.id}" class="btn-outline">Details</a>
+                </div>
+            </div>
+        `;
+
         const courseCard = `
             <article class="course-card">
                 <div class="card-header">
@@ -19,7 +80,8 @@ function renderCourses(coursesList) {
                          alt="${course.title}" loading="lazy">
                     <span class="badge ${course.level.toLowerCase()}">${course.level}</span>
                 </div>
-                </article>
+                ${cardBody}
+            </article>
         `;
         container.insertAdjacentHTML('beforeend', courseCard);
     });
@@ -58,214 +120,103 @@ function renderBooks(booksList) {
         container.insertAdjacentHTML('beforeend', bookCard);
     });
 }
-/* Videos rendering function (might need to get deleted) 
-function renderVideos(videoList) {
-    const container = document.getElementById('videos-grid');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    if (videoList.length === 0) {
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No videos found.</p>';
-        return;
-    }
-
-    videoList.forEach(video => {
-        const videoCard = `
-            <article class="course-card">
-                <div class="card-header">
-                    <img src="${video.image}" alt="${video.title}" loading="lazy">
-                    <span class="badge ${video.level.toLowerCase()}">${video.level}</span>
-                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">
-                        ${video.duration}
-                    </div>
-                </div>
-                <div class="card-body">
-                    <span class="category">${getCategoryName(video.category)}</span>
-                    <h3>${video.title}</h3>
-                    <p>${video.description}</p>
-                    <div class="card-footer">
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">
-                            👁 ${video.views} views
-                        </span>
-                        <button class="btn-outline">Watch Now</button>
-                    </div>
-                </div>
-            </article>
-        `;
-        
-        container.insertAdjacentHTML('beforeend', videoCard);
-    });
-}
-*/
-
-function getCategoryName(catSlug) {
-    const names = {
-        'web-dev': 'Web Development',
-        'programming': 'Programming',
-        'security': 'Cybersecurity',
-        'databases': 'Databases'
-    };
-    return names[catSlug] || catSlug;
-}
-
 
 /* =========================================
-   2. MAIN LOGIC (Page Detection)
+   5. PAGE-SPECIFIC LOGIC SETUP
    ========================================= */
 
-document.addEventListener('DOMContentLoaded', () => {
+function setupCoursesPage() {
+    const searchInput = document.getElementById('searchInput');
+    const categorySelect = document.getElementById('categorySelect');
+    const levelSelect = document.getElementById('levelSelect');
+    const clearBtn = document.getElementById('clearFiltersBtn');
 
-    const coursesContainer = document.getElementById('courses-grid');
-    
-    if (coursesContainer) {
-        const searchInput = document.getElementById('searchInput');
-        const categorySelect = document.getElementById('categorySelect');
-        const levelSelect = document.getElementById('levelSelect');
-        const clearBtn = document.getElementById('clearFiltersBtn');
-
-        if (!searchInput) {
-            if (typeof courses !== 'undefined') {
-                renderCourses(courses.slice(0, 3));
-            }
-        } else {
-            if (typeof courses !== 'undefined') {
-                renderCourses(courses);
-            }
-
-            function filterCourses() {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const selectedCategory = categorySelect.value;
-                const selectedLevel = levelSelect.value;
-
-                const filteredData = courses.filter(course => {
-                    const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
-                                          course.description.toLowerCase().includes(searchTerm);
-                    const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
-                    const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
-
-                    return matchesSearch && matchesCategory && matchesLevel;
-                });
-
-                renderCourses(filteredData);
-            }
-
-            searchInput.addEventListener('input', filterCourses);
-            categorySelect.addEventListener('change', filterCourses);
-            levelSelect.addEventListener('change', filterCourses);
-
-            clearBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                categorySelect.value = 'all';
-                levelSelect.value = 'all';
-                renderCourses(courses);
-            });
+    // Check if this is the courses listing page (with filters) or home page (featured)
+    if (!searchInput) {
+        // Home page: render only first 3 courses
+        if (typeof courses !== 'undefined') {
+            renderCourses(courses.slice(0, 3), true);
         }
+    } else {
+        // Courses listing page: render all with filter setup
+        if (typeof courses !== 'undefined') {
+            renderCourses(courses, false);
+        }
+
+        function filterCourses() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedCategory = categorySelect.value;
+            const selectedLevel = levelSelect.value;
+
+            const filteredData = courses.filter(course => {
+                const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
+                                      course.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
+                const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
+
+                return matchesSearch && matchesCategory && matchesLevel;
+            });
+
+            renderCourses(filteredData, false);
+        }
+
+        searchInput.addEventListener('input', filterCourses);
+        categorySelect.addEventListener('change', filterCourses);
+        levelSelect.addEventListener('change', filterCourses);
+
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            categorySelect.value = 'all';
+            levelSelect.value = 'all';
+            renderCourses(courses, false);
+        });
+    }
+}
+
+function setupBooksPage() {
+    const searchInput = document.getElementById('searchInput');
+    const categorySelect = document.getElementById('categorySelect');
+    const levelSelect = document.getElementById('levelSelect');
+    const clearBtn = document.getElementById('clearFiltersBtn');
+
+    if (typeof books !== 'undefined') {
+        renderBooks(books);
     }
 
-    const booksContainer = document.getElementById('books-grid');
-    
-    if (booksContainer) {
-        const searchInput = document.getElementById('searchInput'); // Books page also has search
-        const categorySelect = document.getElementById('categorySelect');
-        const levelSelect = document.getElementById('levelSelect');
-        const clearBtn = document.getElementById('clearFiltersBtn');
+    if (searchInput) {
+        function filterBooks() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedCategory = categorySelect.value;
+            const selectedLevel = levelSelect.value;
 
-        if (typeof books !== 'undefined') {
+            const filteredData = books.filter(book => {
+                const matchesSearch = book.title.toLowerCase().includes(searchTerm) || 
+                                      book.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || book.category === selectedCategory;
+                const matchesLevel = selectedLevel === 'all' || book.level === selectedLevel;
+
+                return matchesSearch && matchesCategory && matchesLevel;
+            });
+
+            renderBooks(filteredData);
+        }
+
+        searchInput.addEventListener('input', filterBooks);
+        categorySelect.addEventListener('change', filterBooks);
+        levelSelect.addEventListener('change', filterBooks);
+
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            categorySelect.value = 'all';
+            levelSelect.value = 'all';
             renderBooks(books);
-        }
-
-        if (searchInput) {
-            function filterBooks() {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const selectedCategory = categorySelect.value;
-                const selectedLevel = levelSelect.value;
-
-                const filteredData = books.filter(book => {
-                    const matchesSearch = book.title.toLowerCase().includes(searchTerm) || 
-                                          book.description.toLowerCase().includes(searchTerm);
-                    const matchesCategory = selectedCategory === 'all' || book.category === selectedCategory;
-                    const matchesLevel = selectedLevel === 'all' || book.level === selectedLevel;
-
-                    return matchesSearch && matchesCategory && matchesLevel;
-                });
-
-                renderBooks(filteredData);
-            }
-
-            searchInput.addEventListener('input', filterBooks);
-            categorySelect.addEventListener('change', filterBooks);
-            levelSelect.addEventListener('change', filterBooks);
-
-            clearBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                categorySelect.value = 'all';
-                levelSelect.value = 'all';
-                renderBooks(books);
-            });
-        }
+        });
     }
-/* Videos Page Logic (might need to get deleted)
-    const videosContainer = document.getElementById('videos-grid');
-    
-    if (videosContainer) {
-        if (typeof videos !== 'undefined') {
-            renderVideos(videos);
-        }
-
-        const searchInput = document.getElementById('searchInput');
-        const categorySelect = document.getElementById('categorySelect');
-        const levelSelect = document.getElementById('levelSelect');
-        const clearBtn = document.getElementById('clearFiltersBtn');
-
-        if (searchInput) {
-            function filterVideos() {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const selectedCategory = categorySelect.value;
-                const selectedLevel = levelSelect.value;
-
-                const filteredData = videos.filter(video => {
-                    const matchesSearch = video.title.toLowerCase().includes(searchTerm) || 
-                                          video.description.toLowerCase().includes(searchTerm);
-                    const matchesCategory = selectedCategory === 'all' || video.category === selectedCategory;
-                    const matchesLevel = selectedLevel === 'all' || video.level === selectedLevel;
-
-                    return matchesSearch && matchesCategory && matchesLevel;
-                });
-
-                renderVideos(filteredData);
-            }
-
-            searchInput.addEventListener('input', filterVideos);
-            categorySelect.addEventListener('change', filterVideos);
-            levelSelect.addEventListener('change', filterVideos);
-
-            clearBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                categorySelect.value = 'all';
-                levelSelect.value = 'all';
-                renderVideos(videos);
-            });
-        }
-    }
-*/
-
-    const titleElement = document.getElementById('course-title');
-    
-    if (titleElement) {
-        loadCourseDetails();
-    }
-
-    const bookTitleElement = document.getElementById('book-title');
-    
-    if (bookTitleElement) {
-        loadBookDetails();
-    }
-});
+}
 
 
 /* =========================================
-   3. DETAILS PAGE LOGIC
+   6. DETAILS PAGE LOGIC
    ========================================= */
 
 function loadCourseDetails() {
@@ -322,10 +273,6 @@ function loadCourseDetails() {
         });
     }
 }
-
-/* =========================================
-   4. BOOK DETAILS PAGE LOGIC
-   ========================================= */
 
 function loadBookDetails() {
     const params = new URLSearchParams(window.location.search);
@@ -384,3 +331,40 @@ function loadBookDetails() {
         });
     }
 }
+
+/* =========================================
+   7. MAIN ENTRY POINT
+   (Orchestrates all initialization)
+   ========================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Page detection
+    const currentPage = detectCurrentPage();
+
+    // Menu initialization on all pages
+    initializeMenu();
+
+    // Data loading (already available from external script tags)
+    // No additional data loading needed as courses and books are loaded globally
+
+    // Page-specific event listeners and rendering
+    if (currentPage.isCoursesPage) {
+        setupCoursesPage();
+    }
+
+    if (currentPage.isBooksPage) {
+        setupBooksPage();
+    }
+
+    if (currentPage.isCourseDetailsPage) {
+        loadCourseDetails();
+    }
+
+    if (currentPage.isBookDetailsPage) {
+        loadBookDetails();
+    }
+
+    if (currentPage.isHomePage) {
+        setupCoursesPage();  // Renders featured courses on home page
+    }
+});
