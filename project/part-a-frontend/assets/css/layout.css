@@ -383,6 +383,13 @@ section h1,
     margin-bottom: var(--spacing-lg);
 }
 
+/* Book Details Page - Display Entire Book Cover */
+.book-details-container .main-image {
+    object-fit: contain;
+    background-color: var(--bg-light);
+    padding: var(--spacing-lg);
+}
+
 .sidebar-card {
     background: var(--bg-lighter);
     padding: var(--spacing-lg);
@@ -563,5 +570,10 @@ footer {
 
     .main-image {
         height: 400px;
+    }
+
+    /* Book Details - Increase image height on desktop */
+    .book-details-container .main-image {
+        height: 500px;
     }
 }

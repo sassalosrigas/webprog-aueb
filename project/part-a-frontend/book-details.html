@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Details - E-Learn</title>
+    <title>Book Details - E-Learn</title>
     
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/theme.css">
@@ -34,39 +34,40 @@
         </div>
     </header>
 
-    <main class="details-container">
+    <main class="details-container book-details-container">
         
         <header class="details-header">
-            <span id="course-category" class="badge"></span>
-            <h1 id="course-title">Load Title...</h1>
-            <p id="course-desc" class="lead-text"></p>
+            <span id="book-category" class="badge"></span>
+            <h1 id="book-title">Load Title...</h1>
+            <p id="book-desc" class="lead-text"></p>
         </header>
 
         <div class="details-layout">
             <div class="details-content">
-                <img id="course-image" src="" alt="" class="main-image">
+                <img id="book-image" src="" alt="" class="main-image">
                 
                 <section>
                     <h2>Description</h2>
-                    <p id="course-long-desc"></p>
+                    <p id="book-long-desc"></p>
                 </section>
 
                 <section>
-                    <h2>What You Will Learn (Syllabus)</h2>
-                    <ul id="course-syllabus" class="syllabus-list">
-                        </ul>
+                    <h2>What You Will Learn (Table of Contents)</h2>
+                    <ul id="book-syllabus" class="syllabus-list">
+                    </ul>
                 </section>
             </div>
 
             <aside class="details-sidebar">
                 <div class="sidebar-card">
-                    <div class="price-tag" id="course-price"></div>
+                    <div class="price-tag" id="book-price"></div>
                     <ul>
-                        <li><strong>Duration:</strong> <span id="course-duration"></span></li>
-                        <li><strong>Level:</strong> <span id="course-level"></span></li>
-                        <li><strong>Instructor:</strong> <span id="course-instructor"></span></li>
+                        <li><strong>Pages:</strong> <span id="book-pages"></span></li>
+                        <li><strong>Level:</strong> <span id="book-level"></span></li>
+                        <li><strong>Author:</strong> <span id="book-author"></span></li>
+                        <li><strong>ISBN:</strong> <span id="book-isbn"></span></li>
                     </ul>
-                    <button class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-lg);">Enroll Now</button>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-lg);">Purchase Now</button>
                 </div>
             </aside>
         </div>
@@ -76,13 +77,8 @@
         <p>&copy; 2025 E-Learning Service</p>
     </footer>
 
-    <script src="assets/js/data/courses.js"></script>
+    <script src="assets/js/data/books.js"></script>
     <script src="assets/js/ui/menu.js"></script>
     <script src="app.js"></script> 
 </body>
 </html>
-                <!--<button class="btn-primary full-width">Enroll Now</button>
-            </div>
-        </aside>
-    </div> -->
-</main>
