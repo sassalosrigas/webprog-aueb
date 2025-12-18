@@ -27,23 +27,7 @@ function detectCurrentPage() {
 }
 
 /* =========================================
-   3. MENU INITIALIZATION
-   ========================================= */
-
-function initializeMenu() {
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    const nav = document.querySelector('.main-nav');
-
-    if (menuBtn && nav) {
-        menuBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            nav.classList.toggle('active');
-        });
-    }
-}
-
-/* =========================================
-   4. RENDERING FUNCTIONS
+   3. RENDERING FUNCTIONS
    ========================================= */
 
 function renderCourses(coursesList, isFeatured = true) {
@@ -122,7 +106,7 @@ function renderBooks(booksList) {
 }
 
 /* =========================================
-   5. PAGE-SPECIFIC LOGIC SETUP
+   4. PAGE-SPECIFIC LOGIC SETUP
    ========================================= */
 
 function setupCoursesPage() {
@@ -216,7 +200,7 @@ function setupBooksPage() {
 
 
 /* =========================================
-   6. DETAILS PAGE LOGIC
+   5. DETAILS PAGE LOGIC
    ========================================= */
 
 function loadCourseDetails() {
@@ -333,16 +317,13 @@ function loadBookDetails() {
 }
 
 /* =========================================
-   7. MAIN ENTRY POINT
+   6. MAIN ENTRY POINT
    (Orchestrates all initialization)
    ========================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
     // Page detection
     const currentPage = detectCurrentPage();
-
-    // Menu initialization on all pages
-    initializeMenu();
 
     // Data loading (already available from external script tags)
     // No additional data loading needed as courses and books are loaded globally
