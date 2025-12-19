@@ -3,10 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const confirmInput = document.getElementById('confirm-password');
     const matchError = document.getElementById('match-error');
+    const interestsError = document.getElementById('interests-error');
 
     confirmInput.addEventListener('input', () => {
         if (confirmInput.value !== passwordInput.value) {
-            confirmInput.setCustomValidity('Οι κωδικοί δεν ταιριάζουν');
+            confirmInput.setCustomValidity('Passwords do not match');
             matchError.style.display = 'block';
         } else {
             confirmInput.setCustomValidity('');
@@ -21,6 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return; 
         }
 
+        // Check that at least one interest is selected
+        const selectedInterests = Array.from(document.querySelectorAll('input[name="interests"]:checked'));
+        
+        if (selectedInterests.length === 0) {
+            interestsError.style.display = 'block';
+            return;
+        } else {
+            interestsError.style.display = 'none';
+        }
+
         const birthDate = new Date(document.getElementById('birthdate').value);
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
@@ -30,19 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (age < 16) {
-            alert('Πρέπει να είστε άνω των 16 ετών για εγγραφή.');
+            alert('You must be at least 16 years old to register.');
             return;
         }
 
-        const selectedInterests = Array.from(document.querySelectorAll('input[name="interests"]:checked'))
-            .map(cb => cb.value);
+        const interestsValues = selectedInterests.map(cb => cb.value);
 
         const formData = {
             fullname: document.getElementById('fullname').value,
             email: document.getElementById('email').value,
             birthdate: document.getElementById('birthdate').value,
             level: document.querySelector('input[name="level"]:checked').value,
-            interests: selectedInterests,
+            interests: interestsValues,
             registeredAt: new Date().toISOString()
         };
 
